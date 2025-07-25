@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modelo de Teoría de Colas</title>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="../bootstrap-5.3.7-dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body class="bg-light text-dark">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm px-4 py-3 d-flex justify-content-between align-items-center">
+    <div class="fw-bold">☕ Cafetería</div>
+    <div class="text-center">
+      <div class="h5 mb-0">MODELO DE TEORÍA DE COLAS</div>
+      <div class="small text-muted">M/M/c – CAFETERÍA UNIVERSITARIA</div>
+    </div>
+    <div>
+      <a href="../index.html" class="btn btn-outline-primary btn-sm">🏠 Inicio</a>
+    </div>
+  </nav>
+
+  <!-- Contenido -->
+  <main class="container py-5">
+    <div class="bg-white p-4 rounded-4 shadow-sm">
+      <h2 class="h5 mb-3">¿Qué es el modelo M/M/c?</h2>
+      <p>El modelo <strong>M/M/c</strong> es parte de la teoría de colas y se utiliza para analizar sistemas donde múltiples servidores (como cajeros) atienden a clientes que llegan al sistema de manera aleatoria.</p>
+
+      <p>Las siglas representan:</p>
+      <ul>
+        <li><strong>M:</strong> Llegadas de clientes con distribución de Poisson (tiempos entre llegadas con distribución exponencial).</li>
+        <li><strong>M:</strong> Tiempo de servicio también con distribución exponencial.</li>
+        <li><strong>c:</strong> Número de servidores que atienden en paralelo.</li>
+      </ul>
+
+      <h2 class="h6 mt-4">Variables principales</h2>
+      <ul>
+        <li><strong>λ (lambda):</strong> Tasa de llegada de clientes (clientes por minuto).</li>
+        <li><strong>μ (mu):</strong> Tasa de servicio (clientes atendidos por minuto).</li>
+        <li><strong>c:</strong> Número de cajeros disponibles.</li>
+      </ul>
+
+      <h2 class="h6 mt-4">Fórmulas importantes</h2>
+      <p>Las siguientes fórmulas te ayudan a estimar cómo se comportará el sistema:</p>
+
+      <ul>
+        <li><strong>ρ (rho):</strong> Utilización del sistema<br>
+          <code>ρ = λ / (c × μ)</code>
+        </li>
+        <li><strong>P₀:</strong> Probabilidad de que no haya clientes en el sistema (fórmula completa en PDF técnico).</li>
+        <li><strong>Lq:</strong> Número esperado de clientes en la cola.</li>
+        <li><strong>Wq:</strong> Tiempo promedio que un cliente pasa esperando en la fila.<br>
+          <code>Wq = Lq / λ</code>
+        </li>
+        <li><strong>L:</strong> Número promedio de clientes en el sistema.<br>
+          <code>L = Lq + (λ / μ)</code>
+        </li>
+        <li><strong>W:</strong> Tiempo total promedio que un cliente pasa en el sistema.<br>
+          <code>W = Wq + (1 / μ)</code>
+        </li>
+      </ul>
+
+      <p class="mt-4">En este simulador, estas fórmulas se aplican detrás de escena y te ayudan a tomar decisiones como cuántos cajeros necesitas o si el sistema actual está colapsando.</p>
+
+      <div class="text-end mt-4">
+        <a href="../index.html" class="btn btn-secondary">← Volver al inicio</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Bootstrap JS -->
+  <script src="../bootstrap-5.3.7-dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

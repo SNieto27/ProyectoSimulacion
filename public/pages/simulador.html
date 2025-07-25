@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulador en acción</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="../bootstrap-5.3.7-dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body class="bg-light text-dark">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm px-4 py-3 d-flex justify-content-between align-items-center">
+    <div class="fw-bold">☕ Cafetería</div>
+    <div class="text-center">
+      <div class="h5 mb-0">SIMULACIÓN EN PROCESO</div>
+      <div class="small text-muted">MODELO M/M/c</div>
+    </div>
+    <div>
+      <a href="../index.html" class="btn btn-outline-primary btn-sm">🏠 Inicio</a>
+    </div>
+  </nav>
+
+  <!-- Contenido principal -->
+  <main class="container py-4">
+    <!-- Configuración de simulación -->
+    <div class="bg-white p-4 rounded-4 shadow-sm mb-4">
+        <h2 class="h6 mb-3">Parámetros de Simulación</h2>
+        <form id="simForm" class="row gy-3">
+                <div class="col-md-3">
+                    <label for="llegada" class="form-label">Tasa de llegada promedio (clientes/min)</label>
+                    <input type="number" step="any" min="0" class="form-control" id="llegada" required>
+                </div>
+                <div class="col-md-3">
+                    <label for="servicio" class="form-label">Tiempo promedio de servicio (min)</label>
+                    <input type="number" step="any" min="0.01" class="form-control" id="servicio" required>
+                </div>
+                <div class="col-md-3">
+                    <label for="cajeros" class="form-label">Número de cajeros</label>
+                    <input type="number" min="1" class="form-control" id="cajeros" required>
+                </div>
+                <div class="col-md-3">
+                    <label for="tiempo" class="form-label">Tiempo total de simulación (min)</label>
+                    <input type="number" min="1" class="form-control" id="tiempo" required>
+                </div>
+        </form>
+    </div>
+
+    <!-- Controles -->
+    <div class="d-flex gap-3 mb-4">
+      <button class="btn btn-success" id="btnIniciar">Iniciar</button>
+      <button class="btn btn-warning" id="btnPausar" disabled>Pausar</button>
+      <button class="btn btn-danger" id="btnReiniciar" disabled>Reiniciar</button>
+    </div>
+
+    <!-- Animación de flujo de atención (placeholder) -->
+    <div class="bg-white p-4 rounded-4 shadow-sm mb-4" style="min-height: 150px;">
+      <h2 class="h6 mb-3">Flujo de Atención (Animación)</h2>
+      <div id="animacion" class="text-muted">[Aquí se mostrará una animación básica de clientes entrando y siendo atendidos]</div>
+    </div>
+
+    <!-- Estadísticas en tiempo real -->
+    <div class="bg-white p-4 rounded-4 shadow-sm mb-4">
+      <h2 class="h6 mb-3">Estadísticas en Tiempo Real</h2>
+      <ul class="mb-0">
+        <li>Clientes en fila: <span id="filaActual">0</span></li>
+        <li>Clientes atendidos: <span id="atendidos">0</span></li>
+        <li>Tiempo promedio de espera: <span id="esperaProm">0 min</span></li>
+        <li>Utilización del sistema: <span id="utilizacion">0%</span></li>
+      </ul>
+    </div>
+
+    <!-- Resultados finales -->
+    <div class="bg-white p-4 rounded-4 shadow-sm">
+      <h2 class="h6 mb-3">Resultados Finales</h2>
+      <p>Estos datos aparecerán una vez que la simulación haya terminado:</p>
+      <ul>
+        <li>Total de clientes simulados: <span id="totalClientes">--</span></li>
+        <li>Promedio de clientes en el sistema (L): <span id="promClientes">--</span></li>
+        <li>Promedio de espera en fila (Wq): <span id="promEspera">--</span></li>
+        <li>Uso promedio por cajero (ρ): <span id="usoCajero">--</span></li>
+      </ul>
+    </div>
+  </main>
+
+  <!-- Bootstrap JS -->
+  <script src="../bootstrap-5.3.7-dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Simulación lógica JS -->
+  <script src="../js/simulador.js"></script>
+</body>
+</html>

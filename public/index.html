@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulador de Cafetería</title>
+
+  <!-- Bootstrap 5.3.7 CSS -->
+  <link rel="stylesheet" href="bootstrap-5.3.7-dist/css/bootstrap.min.css" />
+
+  <!-- Estilos propios -->
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="bg-light text-dark">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm px-4 py-3 d-flex justify-content-between align-items-center">
+    <div class="fw-bold">☕ Cafetería</div>
+    <div class="text-center">
+      <div class="h5 mb-0">SIMULADOR DE ATENCIÓN AL CLIENTE</div>
+      <div class="small text-muted">CAFETERÍA UNIVERSITARIA</div>
+    </div>
+    <div>
+      <button 
+        class="btn btn-outline-primary btn-sm" 
+        data-bs-toggle="modal" 
+        data-bs-target="#infoModal">
+        <span class="me-1">ℹ️</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Modal Info -->
+  <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="infoModalLabel">INFORMACIÓN SOBRE LAS VARIABLES DEL SIMULADOR</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body text-start">
+          <p><strong>☕ Tasa de llegada de clientes (λ):</strong> Número promedio de clientes que llegan por minuto.<br>Ejemplo: 30 clientes por hora = 0.5 clientes/minuto.</p>
+          <p><strong>⏱️ Tiempo promedio de atención (1/μ):</strong> Minutos que tarda un cajero en atender a un cliente.<br>Ejemplo: Si tarda 2 minutos por cliente, coloca "2".</p>
+          <p><strong>🧍‍♂️ Número de cajeros (c):</strong> Cuántos empleados atienden al mismo tiempo.<br>Ejemplo: Si hay 3 cajeros, coloca "3".</p>
+          <p><strong>⏳ Tiempo de simulación:</strong> Cuántos minutos quieres simular.<br>Ejemplo: Para una hora, coloca "60".</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <main class="container py-5">
+    <!-- Bienvenida -->
+    <div class="bg-white p-4 rounded-4 shadow-sm mb-4 text-center">
+      <h2 class="h5 mb-3">BIENVENIDO AL SIMULADOR DE ATENCIÓN AL CLIENTE</h2>
+      <a href="pages/simulador.html" class="btn btn-primary">Ingresar al simulador</a>
+    </div>
+
+    <!-- Qué hace el simulador -->
+    <div class="bg-white p-4 rounded-4 shadow-sm position-relative">
+      <h2 class="h6 mb-3 text-center">¿QUÉ HACE ESTE SIMULADOR?</h2>
+      <p>Este simulador te permite visualizar cómo se comporta la atención al cliente en una cafetería universitaria, especialmente durante las horas más ocupadas.</p>
+      <p>Podrás ver cómo cambian las filas y los tiempos de espera al modificar la cantidad de cajeros, la rapidez con la que atienden y cuántos clientes llegan por minuto.</p>
+      <p>Es una herramienta útil para tomar mejores decisiones: por ejemplo, ¿conviene agregar un cajero en horas pico? ¿o el sistema actual puede manejar la carga?</p>
+      <p>Aunque está basado en modelos matemáticos, no necesitas saber teoría de colas ni programación para usarlo. Solo ajusta los valores que tú creas realistas y explora los resultados.</p>
+      <div class="text-end">
+        <a href="pages/teoria.html" class="btn btn-outline-secondary">Leer más</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Bootstrap JS Bundle (con Popper incluido) -->
+  <script src="bootstrap-5.3.7-dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
