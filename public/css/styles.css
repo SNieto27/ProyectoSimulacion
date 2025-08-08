@@ -1,0 +1,38 @@
+.zona {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.cajero {
+  width: 80px;
+  height: 80px;
+  background: #ccc;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.cajero.ocupado {
+  background: #ffb347;
+}
+
+.cliente {
+  width: 40px;
+  height: 40px;
+  background: #6fa8dc;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  color: white;
+  transition: all 0.5s ease;
+}
