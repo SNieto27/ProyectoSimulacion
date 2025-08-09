@@ -1,0 +1,201 @@
+/* Estilos para la animación del simulador */
+.simulacion-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 15px;
+  min-height: 300px;
+}
+
+.cajeros-section {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.cajero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  min-width: 80px;
+  transition: all 0.3s ease;
+}
+
+.cajero.ocupado {
+  background: #d4edda;
+  border: 2px solid #28a745;
+}
+
+.cajero.libre {
+  background: #f8f9fa;
+  border: 2px solid #6c757d;
+}
+
+.cajero-icon {
+  font-size: 2rem;
+  margin-bottom: 5px;
+}
+
+.cajero-status {
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.cliente-atendido {
+  font-size: 1.5rem;
+  margin-top: 5px;
+  animation: bounce 0.5s ease-in-out;
+}
+
+.fila-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fila-titulo {
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #495057;
+}
+
+.fila-clientes {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  min-height: 60px;
+  padding: 10px;
+  background: rgba(255,255,255,0.5);
+  border-radius: 10px;
+  border: 2px dashed #dee2e6;
+}
+
+.cliente {
+  font-size: 1.8rem;
+  animation: slideIn 0.5s ease-out;
+  transition: all 0.3s ease;
+}
+
+.cliente:hover {
+  transform: scale(1.1);
+}
+
+.cliente-saliendo {
+  animation: slideOut 0.5s ease-in forwards;
+}
+
+.entrada-clientes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+  padding: 10px;
+  background: rgba(0,123,255,0.1);
+  border-radius: 8px;
+  border-left: 4px solid #007bff;
+}
+
+.flecha-entrada {
+  font-size: 1.5rem;
+  color: #007bff;
+  animation: pulse 2s infinite;
+}
+
+.stats-mini {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 15px;
+  padding: 10px;
+  background: rgba(255,255,255,0.8);
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-value {
+  font-weight: bold;
+  color: #007bff;
+}
+
+/* Animaciones */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 60%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  80% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cajeros-section {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .cajero {
+    min-width: 60px;
+    padding: 10px;
+  }
+  
+  .fila-clientes {
+    gap: 5px;
+  }
+  
+  .cliente {
+    font-size: 1.5rem;
+  }
+}

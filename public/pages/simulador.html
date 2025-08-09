@@ -61,6 +61,35 @@
       <div id="animacion" class="text-muted">[Aquí se mostrará una animación básica de clientes entrando y siendo atendidos]</div>
     </div>
 
+    <!-- Gráficos en tiempo real -->
+    <div class="bg-white p-4 rounded-4 shadow-sm mb-4">
+      <h2 class="h6 mb-3">📊 Gráficos en Tiempo Real</h2>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <div class="chart-container" style="position: relative; height: 300px;">
+            <canvas id="chartFila"></canvas>
+          </div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <div class="chart-container" style="position: relative; height: 300px;">
+            <canvas id="chartUtilizacion"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <div class="chart-container" style="position: relative; height: 300px;">
+            <canvas id="chartAtendidos"></canvas>
+          </div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <div class="chart-container" style="position: relative; height: 300px;">
+            <canvas id="chartEspera"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Estadísticas en tiempo real -->
     <div class="bg-white p-4 rounded-4 shadow-sm mb-4">
       <h2 class="h6 mb-3">Estadísticas en Tiempo Real</h2>
@@ -88,6 +117,8 @@
     </div>
   </main>
 
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <!-- Bootstrap JS -->
   <script src="../bootstrap-5.3.7-dist/js/bootstrap.bundle.min.js"></script>
   <!-- Simulación lógica JS -->
