@@ -527,6 +527,9 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // Limpiar gráficos
     limpiarGraficos();
+
+    const resultadosDiv = document.getElementById("resultadosFinales");
+    resultadosDiv.classList.add("d-none");
   });
 
   // Simular paso por paso
@@ -627,5 +630,8 @@ document.addEventListener("DOMContentLoaded", () => {
       mensajeFinal.innerHTML = "✅¡Simulación completada! Revisa los resultados finales abajo.";
       statsContainer.parentNode.appendChild(mensajeFinal);
     }
+
+    const resultadosDiv = document.getElementById("resultadosFinales");
+    resultadosDiv.classList.remove("d-none");
   }
 });

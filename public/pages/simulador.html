@@ -57,7 +57,7 @@
 
     <!-- Animación de flujo de atención (placeholder) -->
     <div class="bg-white p-4 rounded-4 shadow-sm mb-4" style="min-height: 150px;">
-      <h2 class="h6 mb-3">Flujo de Atención (Animación)</h2>
+      <h2 class="h6 mb-3">Flujo de Atención</h2>
       <div id="animacion" class="text-muted">[Aquí se mostrará una animación básica de clientes entrando y siendo atendidos]</div>
     </div>
     
@@ -75,9 +75,20 @@
         </div>
     </div>
     
+    <!-- Resultados finales -->
+    <div id="resultadosFinales" class="bg-white p-4 mb-4 rounded-4 shadow-sm d-none">
+      <h2 class="h6 mb-3">Resultados Finales</h2>
+      <ul>
+        <li>Total de clientes simulados: <span id="totalClientes">--</span></li>
+        <li>Promedio de clientes en el sistema (L): <span id="promClientes">--</span></li>
+        <li>Promedio de espera en fila (Wq): <span id="promEspera">--</span></li>
+        <li>Uso promedio por cajero (ρ): <span id="usoCajero">--</span></li>
+      </ul>
+    </div>
+
     <!-- Gráficos en tiempo real -->
     <div class="bg-white p-4 rounded-4 shadow-sm mb-4">
-      <h2 class="h6 mb-3">📊 Gráficos en Tiempo Real</h2>
+      <h2 class="h6 mb-3">Gráficos en Tiempo Real</h2>
       <div class="row">
         <div class="col-md-6 mb-3">
           <div class="chart-container" style="position: relative; height: 300px;">
@@ -104,18 +115,6 @@
       </div>
     </div>
 
-
-    <!-- Resultados finales -->
-    <div class="bg-white p-4 rounded-4 shadow-sm">
-      <h2 class="h6 mb-3">Resultados Finales</h2>
-      <p>Estos datos aparecerán una vez que la simulación haya terminado:</p>
-      <ul>
-        <li>Total de clientes simulados: <span id="totalClientes">--</span></li>
-        <li>Promedio de clientes en el sistema (L): <span id="promClientes">--</span></li>
-        <li>Promedio de espera en fila (Wq): <span id="promEspera">--</span></li>
-        <li>Uso promedio por cajero (ρ): <span id="usoCajero">--</span></li>
-      </ul>
-    </div>
   </main>
 
   <!-- Chart.js -->
