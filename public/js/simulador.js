@@ -582,8 +582,21 @@ document.addEventListener("DOMContentLoaded", () => {
     // Mostrar alerta si la utilización es muy alta
     if (utilizacionActual >= 85) {
       cuelloBotellaMsg.classList.remove("d-none");
+       cuelloBotellaMsg.innerHTML = `
+      ⚠️ El sistema está operando cerca de su capacidad máxima. ¡Posible cuello de botella detectado!
+      <p class="mt-2 mb-0"><strong>Recomendaciones:</strong></p>
+      <ul class="mb-0 small">
+        <li>Considera aumentar el número de cajeros.</li>
+        <li>Busca formas de reducir el tiempo promedio de atención.</li>
+        <li>Evalúa la gestión de la llegada de clientes en horas pico.</li>
+      </ul>
+    `
     } else {
       cuelloBotellaMsg.classList.add("d-none");
+       // Restablecer el contenido original cuando no hay cuello de botella
+      cuelloBotellaMsg.innerHTML = `
+      ⚠️ El sistema está operando cerca de su capacidad máxima. ¡Posible cuello de botella detectado!
+    `;
     }
 
     tiempoSim++;
@@ -611,7 +624,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (statsContainer) {
       const mensajeFinal = document.createElement("div");
       mensajeFinal.className = "alert alert-success mt-3";
-      mensajeFinal.innerHTML = "🎉 ¡Simulación completada! Revisa los resultados finales abajo.";
+      mensajeFinal.innerHTML = "✅¡Simulación completada! Revisa los resultados finales abajo.";
       statsContainer.parentNode.appendChild(mensajeFinal);
     }
   }
