@@ -134,7 +134,6 @@ document.addEventListener("DOMContentLoaded", () => {
           ...configComun.options.scales,
           y: {
             ...configComun.options.scales.y,
-            max: 100,
             title: {
               display: true,
               text: 'Utilización (%)'
