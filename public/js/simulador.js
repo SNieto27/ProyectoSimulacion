@@ -1,49 +1,42 @@
 // simulador.js
+
 document.addEventListener("DOMContentLoaded", () => {
-  // Elementos DOM principales
+  // Elementos DOM
   const form = document.getElementById("simForm");
+  const animacion = document.getElementById("animacion");
   const btnIniciar = document.getElementById("btnIniciar");
   const btnPausar = document.getElementById("btnPausar");
   const btnReiniciar = document.getElementById("btnReiniciar");
 
-  // Estadísticas en tiempo real
   const spanFilaActual = document.getElementById("filaActual");
   const spanAtendidos = document.getElementById("atendidos");
   const spanEsperaProm = document.getElementById("esperaProm");
   const spanUtilizacion = document.getElementById("utilizacion");
 
-  // Estadísticas finales
   const spanTotalClientes = document.getElementById("totalClientes");
   const spanPromClientes = document.getElementById("promClientes");
   const spanPromEspera = document.getElementById("promEspera");
   const spanUsoCajero = document.getElementById("usoCajero");
 
-  // Mensaje cuello de botella
+  // Referencia al mensaje de cuello de botella existente en HTML
   const cuelloBotellaMsg = document.getElementById("cuelloBotellaMsg");
 
-  // Elementos para animación
-  const zonaCajeros = document.getElementById("zonaCajeros");
-  const zonaFila = document.getElementById("zonaFila");
-
-  // Variables de configuración
   let llegadaRate, servicioTime, numCajeros, tiempoTotal;
   let tiempoSim = 0;
   let timerId = null;
   let simulacionActiva = false;
 
-  // Variables internas de simulación
+  // Variables de simulación
   let cola = [];
   let servidores = [];
   let eventosLlegada = [];
+  let clientes = [];
   let clienteId = 1;
 
   let clientesAtendidos = 0;
   let totalEspera = 0;
   let utilizacionTotal = 0;
 
-<<<<<<< HEAD
-  // Inicializa la lista de servidores (cajeros)
-=======
   // Variables para gráficos
   let chartFila, chartUtilizacion, chartAtendidos, chartEspera;
   let datosGraficos = {
@@ -307,7 +300,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Inicializar cajeros
->>>>>>> bd4da38384e0410efd1a847cdea6e3ee77c16e86
   function inicializarServidores() {
     servidores = [];
     for (let i = 0; i < numCajeros; i++) {
@@ -319,17 +311,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Tiempo de llegada aleatorio (distribución exponencial)
+  // Función para generar tiempo entre llegadas (Poisson)
   function generarTiempoLlegada(lambda) {
     return -Math.log(1 - Math.random()) / lambda;
   }
 
-  // Tiempo de servicio aleatorio (distribución exponencial)
+  // Función para generar tiempo de servicio (Exponencial)
   function generarTiempoServicio(media) {
     return -Math.log(1 - Math.random()) * media;
   }
 
-  // Prepara la lista de llegadas de clientes
+  // Generar todos los eventos de llegada al inicio
   function prepararLlegadas() {
     eventosLlegada = [];
     let reloj = 0;
@@ -342,39 +334,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-<<<<<<< HEAD
-  // Dibuja la animación de cajeros y fila
-  function renderAnimacion() {
-    if (!zonaCajeros || !zonaFila) return; // Evita error si no existen en el DOM
-
-    // Render cajeros
-    zonaCajeros.innerHTML = "";
-    servidores.forEach((srv, index) => {
-      const cajeroDiv = document.createElement("div");
-      cajeroDiv.className = "cajero" + (srv.ocupado ? " ocupado" : "");
-      cajeroDiv.textContent = `C${index + 1}`;
-
-      if (srv.ocupado && srv.clienteId !== undefined) {
-        const clienteDiv = document.createElement("div");
-        clienteDiv.className = "cliente";
-        clienteDiv.textContent = srv.clienteId;
-        cajeroDiv.appendChild(clienteDiv);
-      }
-      zonaCajeros.appendChild(cajeroDiv);
-    });
-
-    // Render fila de espera
-    zonaFila.innerHTML = "";
-    cola.forEach(c => {
-      const clienteDiv = document.createElement("div");
-      clienteDiv.className = "cliente";
-      clienteDiv.textContent = c.id;
-      zonaFila.appendChild(clienteDiv);
-    });
-  }
-
-  // Evento iniciar simulación
-=======
   // Crear la interfaz visual de la animación
   function crearInterfazAnimacion() {
     animacion.innerHTML = `
@@ -495,46 +454,41 @@ document.addEventListener("DOMContentLoaded", () => {
   inicializarGraficos();
 
   // Iniciar simulación
->>>>>>> bd4da38384e0410efd1a847cdea6e3ee77c16e86
   btnIniciar.addEventListener("click", () => {
     if (!form.checkValidity()) {
       form.reportValidity();
       return;
     }
 
-    // Valores desde formulario
     llegadaRate = parseFloat(document.getElementById("llegada").value);
     servicioTime = parseFloat(document.getElementById("servicio").value);
     numCajeros = parseInt(document.getElementById("cajeros").value);
     tiempoTotal = parseInt(document.getElementById("tiempo").value);
 
-    // Reset variables
     tiempoSim = 0;
     clientesAtendidos = 0;
     totalEspera = 0;
     utilizacionTotal = 0;
     cola = [];
+    clientes = [];
     clienteId = 1;
 
     inicializarServidores();
     prepararLlegadas();
-<<<<<<< HEAD
-=======
     crearInterfazAnimacion();
     limpiarGraficos();
->>>>>>> bd4da38384e0410efd1a847cdea6e3ee77c16e86
     simulacionActiva = true;
 
     btnIniciar.disabled = true;
     btnPausar.disabled = false;
     btnReiniciar.disabled = false;
+
     cuelloBotellaMsg.classList.add("d-none");
 
-    renderAnimacion();
     timerId = setInterval(simularPaso, 1000);
   });
 
-  // Evento pausar/continuar
+  // Pausar o continuar
   btnPausar.addEventListener("click", () => {
     if (simulacionActiva) {
       clearInterval(timerId);
@@ -547,7 +501,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Evento reiniciar
+  // Reiniciar simulación
   btnReiniciar.addEventListener("click", () => {
     clearInterval(timerId);
     simulacionActiva = false;
@@ -570,24 +524,16 @@ document.addEventListener("DOMContentLoaded", () => {
     // Limpiar animación
     animacion.innerHTML = '<div class="text-muted">[La animación aparecerá cuando inicies la simulación]</div>';
     cuelloBotellaMsg.classList.add("d-none");
-<<<<<<< HEAD
-    renderAnimacion();
-=======
     
     // Limpiar gráficos
     limpiarGraficos();
->>>>>>> bd4da38384e0410efd1a847cdea6e3ee77c16e86
   });
 
-  // Lógica de cada paso de simulación
+  // Simular paso por paso
   function simularPaso() {
-<<<<<<< HEAD
-    // Procesar llegadas
-=======
     let nuevasLlegadas = 0;
     
     // Llegadas
->>>>>>> bd4da38384e0410efd1a847cdea6e3ee77c16e86
     eventosLlegada = eventosLlegada.filter(ev => {
       if (ev.tiempo === tiempoSim) {
         cola.push({ id: ev.id, tiempoLlegada: tiempoSim });
@@ -597,15 +543,11 @@ document.addEventListener("DOMContentLoaded", () => {
       return true;
     });
 
-    // Procesar servidores
-    servidores.forEach((srv) => {
+    // Servidores
+    servidores.forEach((srv, i) => {
       if (srv.ocupado && srv.finServicio === tiempoSim) {
         srv.ocupado = false;
-<<<<<<< HEAD
-        delete srv.clienteId;
-=======
         srv.clienteActual = null;
->>>>>>> bd4da38384e0410efd1a847cdea6e3ee77c16e86
         clientesAtendidos++;
       }
 
@@ -615,7 +557,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const espera = tiempoSim - cliente.tiempoLlegada;
         totalEspera += espera;
         srv.ocupado = true;
-        srv.clienteId = cliente.id;
         srv.finServicio = tiempoSim + duracion;
         srv.clienteActual = cliente.id;
         utilizacionTotal += duracion;
@@ -625,9 +566,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-<<<<<<< HEAD
-    // Estadísticas en tiempo real
-=======
     // Actualizar animación
     actualizarAnimacion();
 
@@ -635,14 +573,13 @@ document.addEventListener("DOMContentLoaded", () => {
     actualizarGraficos();
 
     // Estadísticas tiempo real
->>>>>>> bd4da38384e0410efd1a847cdea6e3ee77c16e86
     const utilizacionActual = (utilizacionTotal / (numCajeros * (tiempoSim + 1))) * 100;
     spanFilaActual.textContent = cola.length;
     spanAtendidos.textContent = clientesAtendidos;
     spanEsperaProm.textContent = clientesAtendidos ? (totalEspera / clientesAtendidos).toFixed(2) + " min" : "0 min";
     spanUtilizacion.textContent = utilizacionActual.toFixed(1) + "%";
 
-    // Mostrar mensaje de cuello de botella si aplica
+    // Mostrar alerta si la utilización es muy alta
     if (utilizacionActual >= 85) {
       cuelloBotellaMsg.classList.remove("d-none");
        cuelloBotellaMsg.innerHTML = `
@@ -662,17 +599,12 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
     }
 
-    // Render animación visual
-    renderAnimacion();
-
-    // Avanzar tiempo
     tiempoSim++;
     if (tiempoSim >= tiempoTotal) {
       finalizarSimulacion();
     }
   }
 
-  // Fin de simulación
   function finalizarSimulacion() {
     clearInterval(timerId);
     simulacionActiva = false;

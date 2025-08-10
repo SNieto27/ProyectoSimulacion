@@ -57,13 +57,24 @@
 
     <!-- Animación de flujo de atención (placeholder) -->
     <div class="bg-white p-4 rounded-4 shadow-sm mb-4" style="min-height: 150px;">
-      <h2 class="h6 mb-3">Flujo de Atención</h2>
-      <div id="animacion" class="text-muted">
-        <h3>Animación en tiempo real</h3>
-        <div id="zonaCajeros" class="zona"></div>
-        <div id="zonaFila" class="zona"></div></div>
+      <h2 class="h6 mb-3">Flujo de Atención (Animación)</h2>
+      <div id="animacion" class="text-muted">[Aquí se mostrará una animación básica de clientes entrando y siendo atendidos]</div>
     </div>
-
+    
+    <!-- Estadísticas en tiempo real -->
+    <div class="bg-white p-4 rounded-4 shadow-sm mb-4">
+      <h2 class="h6 mb-3">Estadísticas en Tiempo Real</h2>
+      <ul class="mb-0">
+        <li>Clientes en fila: <span id="filaActual">0</span></li>
+        <li>Clientes atendidos: <span id="atendidos">0</span></li>
+        <li>Tiempo promedio de espera: <span id="esperaProm">0 min</span></li>
+        <li>Utilización del sistema: <span id="utilizacion">0%</span></li>
+      </ul>
+        <div id="cuelloBotellaMsg" class="alert alert-danger mt-3 d-none">
+          ⚠️ El sistema está operando cerca de su capacidad máxima. ¡Posible cuello de botella detectado!
+        </div>
+    </div>
+    
     <!-- Gráficos en tiempo real -->
     <div class="bg-white p-4 rounded-4 shadow-sm mb-4">
       <h2 class="h6 mb-3">📊 Gráficos en Tiempo Real</h2>
@@ -93,19 +104,6 @@
       </div>
     </div>
 
-    <!-- Estadísticas en tiempo real -->
-    <div class="bg-white p-4 rounded-4 shadow-sm mb-4">
-      <h2 class="h6 mb-3">Estadísticas en Tiempo Real</h2>
-      <ul class="mb-0">
-        <li>Clientes en fila: <span id="filaActual">0</span></li>
-        <li>Clientes atendidos: <span id="atendidos">0</span></li>
-        <li>Tiempo promedio de espera: <span id="esperaProm">0 min</span></li>
-        <li>Utilización del sistema: <span id="utilizacion">0%</span></li>
-      </ul>
-        <div id="cuelloBotellaMsg" class="alert alert-danger mt-3 d-none">
-          ⚠️ El sistema está operando cerca de su capacidad máxima. ¡Posible cuello de botella detectado!
-        </div>
-    </div>
 
     <!-- Resultados finales -->
     <div class="bg-white p-4 rounded-4 shadow-sm">
