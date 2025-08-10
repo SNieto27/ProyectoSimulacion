@@ -41,11 +41,281 @@ document.addEventListener("DOMContentLoaded", () => {
   let totalEspera = 0;
   let utilizacionTotal = 0;
 
+<<<<<<< HEAD
   // Inicializa la lista de servidores (cajeros)
+=======
+  // Variables para gráficos
+  let chartFila, chartUtilizacion, chartAtendidos, chartEspera;
+  let datosGraficos = {
+    tiempos: [],
+    fila: [],
+    utilizacion: [],
+    atendidos: [],
+    espera: []
+  };
+
+  // Inicializar gráficos
+  function inicializarGraficos() {
+    // Configuración común para todos los gráficos
+    const configComun = {
+      type: 'line',
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Tiempo (minutos)'
+            }
+          },
+          y: {
+            beginAtZero: true
+          }
+        },
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top'
+          }
+        },
+        animation: {
+          duration: 0 // Sin animación para mejor rendimiento
+        }
+      }
+    };
+
+    // Gráfico de clientes en fila
+    const ctxFila = document.getElementById('chartFila').getContext('2d');
+    chartFila = new Chart(ctxFila, {
+      ...configComun,
+      data: {
+        labels: [],
+        datasets: [{
+          label: 'Clientes en Fila',
+          data: [],
+          borderColor: 'rgb(255, 99, 132)',
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          tension: 0.1
+        }]
+      },
+      options: {
+        ...configComun.options,
+        scales: {
+          ...configComun.options.scales,
+          y: {
+            ...configComun.options.scales.y,
+            title: {
+              display: true,
+              text: 'Número de Clientes'
+            }
+          }
+        },
+        plugins: {
+          ...configComun.options.plugins,
+          title: {
+            display: true,
+            text: 'Clientes en Fila vs Tiempo'
+          }
+        }
+      }
+    });
+
+    // Gráfico de utilización
+    const ctxUtilizacion = document.getElementById('chartUtilizacion').getContext('2d');
+    chartUtilizacion = new Chart(ctxUtilizacion, {
+      ...configComun,
+      data: {
+        labels: [],
+        datasets: [{
+          label: 'Utilización del Sistema (%)',
+          data: [],
+          borderColor: 'rgb(54, 162, 235)',
+          backgroundColor: 'rgba(54, 162, 235, 0.2)',
+          tension: 0.1
+        }]
+      },
+      options: {
+        ...configComun.options,
+        scales: {
+          ...configComun.options.scales,
+          y: {
+            ...configComun.options.scales.y,
+            max: 100,
+            title: {
+              display: true,
+              text: 'Utilización (%)'
+            }
+          }
+        },
+        plugins: {
+          ...configComun.options.plugins,
+          title: {
+            display: true,
+            text: 'Utilización del Sistema vs Tiempo'
+          }
+        }
+      }
+    });
+
+    // Gráfico de clientes atendidos (acumulativo)
+    const ctxAtendidos = document.getElementById('chartAtendidos').getContext('2d');
+    chartAtendidos = new Chart(ctxAtendidos, {
+      ...configComun,
+      data: {
+        labels: [],
+        datasets: [{
+          label: 'Clientes Atendidos (Acumulativo)',
+          data: [],
+          borderColor: 'rgb(75, 192, 192)',
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          tension: 0.1
+        }]
+      },
+      options: {
+        ...configComun.options,
+        scales: {
+          ...configComun.options.scales,
+          y: {
+            ...configComun.options.scales.y,
+            title: {
+              display: true,
+              text: 'Número de Clientes'
+            }
+          }
+        },
+        plugins: {
+          ...configComun.options.plugins,
+          title: {
+            display: true,
+            text: 'Clientes Atendidos (Acumulativo) vs Tiempo'
+          }
+        }
+      }
+    });
+
+    // Gráfico de tiempo promedio de espera
+    const ctxEspera = document.getElementById('chartEspera').getContext('2d');
+    chartEspera = new Chart(ctxEspera, {
+      ...configComun,
+      data: {
+        labels: [],
+        datasets: [{
+          label: 'Tiempo Promedio de Espera (min)',
+          data: [],
+          borderColor: 'rgb(255, 205, 86)',
+          backgroundColor: 'rgba(255, 205, 86, 0.2)',
+          tension: 0.1
+        }]
+      },
+      options: {
+        ...configComun.options,
+        scales: {
+          ...configComun.options.scales,
+          y: {
+            ...configComun.options.scales.y,
+            title: {
+              display: true,
+              text: 'Tiempo (minutos)'
+            }
+          }
+        },
+        plugins: {
+          ...configComun.options.plugins,
+          title: {
+            display: true,
+            text: 'Tiempo Promedio de Espera vs Tiempo'
+          }
+        }
+      }
+    });
+  }
+
+  // Actualizar gráficos
+  function actualizarGraficos() {
+    const utilizacionActual = (utilizacionTotal / (numCajeros * (tiempoSim + 1))) * 100;
+    const esperaPromedio = clientesAtendidos ? (totalEspera / clientesAtendidos) : 0;
+
+    // Agregar nuevos datos
+    datosGraficos.tiempos.push(tiempoSim);
+    datosGraficos.fila.push(cola.length);
+    datosGraficos.utilizacion.push(utilizacionActual);
+    datosGraficos.atendidos.push(clientesAtendidos);
+    datosGraficos.espera.push(esperaPromedio);
+
+    // Limitar el número de puntos mostrados (últimos 50 para mejor rendimiento)
+    const maxPuntos = 50;
+    if (datosGraficos.tiempos.length > maxPuntos) {
+      datosGraficos.tiempos = datosGraficos.tiempos.slice(-maxPuntos);
+      datosGraficos.fila = datosGraficos.fila.slice(-maxPuntos);
+      datosGraficos.utilizacion = datosGraficos.utilizacion.slice(-maxPuntos);
+      datosGraficos.atendidos = datosGraficos.atendidos.slice(-maxPuntos);
+      datosGraficos.espera = datosGraficos.espera.slice(-maxPuntos);
+    }
+
+    // Actualizar gráficos
+    chartFila.data.labels = [...datosGraficos.tiempos];
+    chartFila.data.datasets[0].data = [...datosGraficos.fila];
+    chartFila.update('none');
+
+    chartUtilizacion.data.labels = [...datosGraficos.tiempos];
+    chartUtilizacion.data.datasets[0].data = [...datosGraficos.utilizacion];
+    chartUtilizacion.update('none');
+
+    chartAtendidos.data.labels = [...datosGraficos.tiempos];
+    chartAtendidos.data.datasets[0].data = [...datosGraficos.atendidos];
+    chartAtendidos.update('none');
+
+    chartEspera.data.labels = [...datosGraficos.tiempos];
+    chartEspera.data.datasets[0].data = [...datosGraficos.espera];
+    chartEspera.update('none');
+  }
+
+  // Limpiar gráficos
+  function limpiarGraficos() {
+    datosGraficos = {
+      tiempos: [],
+      fila: [],
+      utilizacion: [],
+      atendidos: [],
+      espera: []
+    };
+
+    if (chartFila) {
+      chartFila.data.labels = [];
+      chartFila.data.datasets[0].data = [];
+      chartFila.update();
+    }
+
+    if (chartUtilizacion) {
+      chartUtilizacion.data.labels = [];
+      chartUtilizacion.data.datasets[0].data = [];
+      chartUtilizacion.update();
+    }
+
+    if (chartAtendidos) {
+      chartAtendidos.data.labels = [];
+      chartAtendidos.data.datasets[0].data = [];
+      chartAtendidos.update();
+    }
+
+    if (chartEspera) {
+      chartEspera.data.labels = [];
+      chartEspera.data.datasets[0].data = [];
+      chartEspera.update();
+    }
+  }
+
+  // Inicializar cajeros
+>>>>>>> bd4da38384e0410efd1a847cdea6e3ee77c16e86
   function inicializarServidores() {
     servidores = [];
     for (let i = 0; i < numCajeros; i++) {
-      servidores.push({ ocupado: false, finServicio: 0 });
+      servidores.push({ 
+        ocupado: false, 
+        finServicio: 0, 
+        clienteActual: null 
+      });
     }
   }
 
@@ -72,6 +342,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+<<<<<<< HEAD
   // Dibuja la animación de cajeros y fila
   function renderAnimacion() {
     if (!zonaCajeros || !zonaFila) return; // Evita error si no existen en el DOM
@@ -103,6 +374,128 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Evento iniciar simulación
+=======
+  // Crear la interfaz visual de la animación
+  function crearInterfazAnimacion() {
+    animacion.innerHTML = `
+      <div class="simulacion-container">
+        <div class="cajeros-section" id="cajerosContainer">
+          <!-- Los cajeros se generarán dinámicamente -->
+        </div>
+        
+        <div class="fila-section">
+          <div class="fila-titulo">🚶‍♂️ Fila de Espera</div>
+          <div class="fila-clientes" id="filaContainer">
+            <!-- Los clientes en fila aparecerán aquí -->
+          </div>
+        </div>
+        
+        <div class="entrada-clientes">
+          <span class="flecha-entrada">⬆️</span>
+          <span class="ms-2">Entrada de clientes</span>
+        </div>
+        
+        <div class="stats-mini">
+          <div class="stat-item">
+            <div class="stat-value" id="animFilaActual">0</div>
+            <div>En fila</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="animAtendidos">0</div>
+            <div>Atendidos</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="animTiempo">0</div>
+            <div>Tiempo (min)</div>
+          </div>
+        </div>
+      </div>
+    `;
+    
+    // Crear cajeros visuales
+    const cajerosContainer = document.getElementById("cajerosContainer");
+    for (let i = 0; i < numCajeros; i++) {
+      const cajeroDiv = document.createElement("div");
+      cajeroDiv.className = "cajero libre";
+      cajeroDiv.id = `cajero-${i}`;
+      cajeroDiv.innerHTML = `
+        <div class="cajero-icon">👨‍💼</div>
+        <div class="cajero-status">Libre</div>
+        <div class="cliente-atendido" id="cliente-cajero-${i}"></div>
+      `;
+      cajerosContainer.appendChild(cajeroDiv);
+    }
+  }
+
+  // Actualizar la animación visual
+  function actualizarAnimacion() {
+    // Actualizar fila visual
+    const filaContainer = document.getElementById("filaContainer");
+    filaContainer.innerHTML = "";
+    
+    cola.forEach((cliente, index) => {
+      const clienteDiv = document.createElement("div");
+      clienteDiv.className = "cliente";
+      clienteDiv.innerHTML = "🧍‍♂️";
+      clienteDiv.title = `Cliente ${cliente.id} - Esperando ${tiempoSim - cliente.tiempoLlegada} min`;
+      filaContainer.appendChild(clienteDiv);
+    });
+
+    // Actualizar cajeros visuales
+    servidores.forEach((servidor, index) => {
+      const cajeroDiv = document.getElementById(`cajero-${index}`);
+      const clienteCajeroDiv = document.getElementById(`cliente-cajero-${index}`);
+      
+      if (servidor.ocupado) {
+        cajeroDiv.className = "cajero ocupado";
+        cajeroDiv.querySelector(".cajero-status").textContent = `Ocupado (${servidor.finServicio - tiempoSim} min)`;
+        clienteCajeroDiv.innerHTML = "☕";
+      } else {
+        cajeroDiv.className = "cajero libre";
+        cajeroDiv.querySelector(".cajero-status").textContent = "Libre";
+        clienteCajeroDiv.innerHTML = "";
+      }
+    });
+
+    // Actualizar stats mini
+    document.getElementById("animFilaActual").textContent = cola.length;
+    document.getElementById("animAtendidos").textContent = clientesAtendidos;
+    document.getElementById("animTiempo").textContent = tiempoSim;
+  }
+
+  // Animar llegada de cliente
+  function animarLlegadaCliente() {
+    const filaContainer = document.getElementById("filaContainer");
+    const nuevoCliente = document.createElement("div");
+    nuevoCliente.className = "cliente";
+    nuevoCliente.innerHTML = "🧍‍♂️";
+    nuevoCliente.style.opacity = "0";
+    nuevoCliente.style.transform = "translateY(-20px)";
+    
+    filaContainer.appendChild(nuevoCliente);
+    
+    // Animar entrada
+    setTimeout(() => {
+      nuevoCliente.style.opacity = "1";
+      nuevoCliente.style.transform = "translateY(0)";
+    }, 100);
+  }
+
+  // Animar cliente siendo atendido
+  function animarClienteAtendido(cajeroIndex) {
+    const clienteCajeroDiv = document.getElementById(`cliente-cajero-${cajeroIndex}`);
+    clienteCajeroDiv.style.animation = "bounce 0.5s ease-in-out";
+    
+    setTimeout(() => {
+      clienteCajeroDiv.style.animation = "";
+    }, 500);
+  }
+
+  // Inicializar gráficos al cargar la página
+  inicializarGraficos();
+
+  // Iniciar simulación
+>>>>>>> bd4da38384e0410efd1a847cdea6e3ee77c16e86
   btnIniciar.addEventListener("click", () => {
     if (!form.checkValidity()) {
       form.reportValidity();
@@ -125,6 +518,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     inicializarServidores();
     prepararLlegadas();
+<<<<<<< HEAD
+=======
+    crearInterfazAnimacion();
+    limpiarGraficos();
+>>>>>>> bd4da38384e0410efd1a847cdea6e3ee77c16e86
     simulacionActiva = true;
 
     btnIniciar.disabled = true;
@@ -158,6 +556,8 @@ document.addEventListener("DOMContentLoaded", () => {
     btnPausar.disabled = true;
     btnReiniciar.disabled = true;
     btnPausar.textContent = "Pausar";
+    
+    // Limpiar estadísticas
     spanFilaActual.textContent = "0";
     spanAtendidos.textContent = "0";
     spanEsperaProm.textContent = "0 min";
@@ -166,16 +566,32 @@ document.addEventListener("DOMContentLoaded", () => {
     spanPromClientes.textContent = "--";
     spanPromEspera.textContent = "--";
     spanUsoCajero.textContent = "--";
+    
+    // Limpiar animación
+    animacion.innerHTML = '<div class="text-muted">[La animación aparecerá cuando inicies la simulación]</div>';
     cuelloBotellaMsg.classList.add("d-none");
+<<<<<<< HEAD
     renderAnimacion();
+=======
+    
+    // Limpiar gráficos
+    limpiarGraficos();
+>>>>>>> bd4da38384e0410efd1a847cdea6e3ee77c16e86
   });
 
   // Lógica de cada paso de simulación
   function simularPaso() {
+<<<<<<< HEAD
     // Procesar llegadas
+=======
+    let nuevasLlegadas = 0;
+    
+    // Llegadas
+>>>>>>> bd4da38384e0410efd1a847cdea6e3ee77c16e86
     eventosLlegada = eventosLlegada.filter(ev => {
       if (ev.tiempo === tiempoSim) {
         cola.push({ id: ev.id, tiempoLlegada: tiempoSim });
+        nuevasLlegadas++;
         return false;
       }
       return true;
@@ -185,7 +601,11 @@ document.addEventListener("DOMContentLoaded", () => {
     servidores.forEach((srv) => {
       if (srv.ocupado && srv.finServicio === tiempoSim) {
         srv.ocupado = false;
+<<<<<<< HEAD
         delete srv.clienteId;
+=======
+        srv.clienteActual = null;
+>>>>>>> bd4da38384e0410efd1a847cdea6e3ee77c16e86
         clientesAtendidos++;
       }
 
@@ -197,11 +617,25 @@ document.addEventListener("DOMContentLoaded", () => {
         srv.ocupado = true;
         srv.clienteId = cliente.id;
         srv.finServicio = tiempoSim + duracion;
+        srv.clienteActual = cliente.id;
         utilizacionTotal += duracion;
+        
+        // Animar cliente siendo atendido
+        setTimeout(() => animarClienteAtendido(i), 200);
       }
     });
 
+<<<<<<< HEAD
     // Estadísticas en tiempo real
+=======
+    // Actualizar animación
+    actualizarAnimacion();
+
+    // Actualizar gráficos
+    actualizarGraficos();
+
+    // Estadísticas tiempo real
+>>>>>>> bd4da38384e0410efd1a847cdea6e3ee77c16e86
     const utilizacionActual = (utilizacionTotal / (numCajeros * (tiempoSim + 1))) * 100;
     spanFilaActual.textContent = cola.length;
     spanAtendidos.textContent = clientesAtendidos;
@@ -211,8 +645,21 @@ document.addEventListener("DOMContentLoaded", () => {
     // Mostrar mensaje de cuello de botella si aplica
     if (utilizacionActual >= 85) {
       cuelloBotellaMsg.classList.remove("d-none");
+       cuelloBotellaMsg.innerHTML = `
+      ⚠️ El sistema está operando cerca de su capacidad máxima. ¡Posible cuello de botella detectado!
+      <p class="mt-2 mb-0"><strong>Recomendaciones:</strong></p>
+      <ul class="mb-0 small">
+        <li>Considera aumentar el número de cajeros.</li>
+        <li>Busca formas de reducir el tiempo promedio de atención.</li>
+        <li>Evalúa la gestión de la llegada de clientes en horas pico.</li>
+      </ul>
+    `
     } else {
       cuelloBotellaMsg.classList.add("d-none");
+       // Restablecer el contenido original cuando no hay cuello de botella
+      cuelloBotellaMsg.innerHTML = `
+      ⚠️ El sistema está operando cerca de su capacidad máxima. ¡Posible cuello de botella detectado!
+    `;
     }
 
     // Render animación visual
@@ -239,5 +686,14 @@ document.addEventListener("DOMContentLoaded", () => {
     btnPausar.disabled = true;
     btnReiniciar.disabled = false;
     btnPausar.textContent = "Pausar";
+
+    // Mostrar mensaje de finalización en la animación
+    const statsContainer = document.querySelector(".stats-mini");
+    if (statsContainer) {
+      const mensajeFinal = document.createElement("div");
+      mensajeFinal.className = "alert alert-success mt-3";
+      mensajeFinal.innerHTML = "✅¡Simulación completada! Revisa los resultados finales abajo.";
+      statsContainer.parentNode.appendChild(mensajeFinal);
+    }
   }
 });
